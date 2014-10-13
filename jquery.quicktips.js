@@ -1,3 +1,13 @@
+/**
+ * jQueryQuickTips v1.0
+ *
+ * Copyright 2013 Milax
+ * http://www.milax.com/
+ *
+ * Author
+ * Maksim Gusakov
+ */
+
 var QuickTips = function ($objects, option) {
 
 	$objects 		= $objects || false;
