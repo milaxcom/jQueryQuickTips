@@ -39,7 +39,7 @@ ul li { position:relative; margin-left:35px; padding:0 0 11px 10px;}
 .navigation .arrows {
 	width: 90px;
 	margin: 0 auto;
-	background: url("/demo/stuff/arrows.svg");
+	background: url("../stuff/arrows.svg");
 	height: 36px;
 	position: relative;
 }
@@ -70,26 +70,23 @@ ul li { position:relative; margin-left:35px; padding:0 0 11px 10px;}
 	width: 20px;
 	height: 20px;
 	top: 0;
-	background: url("/demo/stuff/time.svg");
+	background: url("../stuff/time.svg");
 	cursor: pointer;
 }
 
 .slide .time.left {
 	position: absolute;
-	left: 0;
+	left: 20px;
 }
 
 .slide .time.right {
 	position: absolute;
-	right: 0;
+	right: 20px;
 }
 
 .slide .time.center {
 	margin: 0 auto;
 }
-
-
-
 
 
 
