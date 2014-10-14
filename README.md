@@ -40,7 +40,7 @@ jQuery Quick Tips предназначен для отображения всп�
 ```
 
 ```js
-<!-- JavaScript -->
+/* JavaScript */
 QuickTips(".my-hint", { "color" : "#FF0000", "background-color" : "#FFF" });
 ```
 
