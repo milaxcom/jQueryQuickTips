@@ -66,4 +66,4 @@ QuickTips(".my-hint", { "color" : "#FF0000", "background-color" : "#FFF" });
 <!-- HTML -->
 <div class="quick-tips" quick-tips="From left border" quick-tips-before="myfunction"></div>
 ```
-В данном примере калбек before исполнит глобальную функцию ```myfunction```.
+В данном примере калбек before исполнит функцию глобальной видимости ```myfunction()```.
