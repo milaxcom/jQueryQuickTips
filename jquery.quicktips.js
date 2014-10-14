@@ -1,5 +1,5 @@
-/**
- * jQueryQuickTips v1.0
+/*
+ * jQueryQuickTips v1.2
  *
  * Copyright 2013 Milax
  * http://www.milax.com/
@@ -20,18 +20,31 @@ var QuickTips = function ($objects, option) {
 			$objects.on("mouseenter.quicktips", function () {
 				QuickTips.show.call( this, option );
 			} );
-		
 		break
 
 		case 'string': 
 			$(document).on("mouseenter.quicktips", $objects, function () {
 				QuickTips.show.call( this, option );
 			} );
-		
 		break
 
-		default: 
+		default: {
+
+			var brCheck 			= (typeof $.browser != "undefined") ? true : false;
+			if ( brCheck ) {
+				var msie 			= ($.browser.msie == true) ? true : false;
+				var old 			= ($.browser.version*1 < 9) ? true : false;
+			}
+
+			/* Если имеем дело со старым IE и это возможно определить */
+			if ( brCheck && msie && old )
+				QuickTips.oldIE 	= true;
+			else
+				QuickTips.oldIE 	= false;
+
+			/* Стандратный вызов */
 			QuickTips(".quick-tips");
+		}
 
 	}
 
@@ -185,7 +198,7 @@ QuickTips.position = function ( tips ) {
 	tips.ps.width 		= $(this).outerWidth();
 	tips.ps.height 		= $(this).outerHeight();
 
-	tips.pt.width 		= tips.option.width;
+	tips.pt.width 		= tips.option.width * 1;
 	//tips.pt.height 	= tips.$element.outerHeight();
 	tips.pt.top 		= tips.ps.top + tips.ps.height + tips.option.space;
 
@@ -213,14 +226,18 @@ QuickTips.position = function ( tips ) {
 			fromCorner 				: 6
 		};
 
-		/* Увеличиваем отступ от верха на величину стрелки */
-		tips.pt.top 		= tips.pt.top + arrow.height;
+		if ( !QuickTips.oldIE )
+			/* Увеличиваем отступ от верха на величину стрелки */
+			tips.pt.top 		= tips.pt.top*1 + arrow.height;
+		else {
+			tips.$arrow.hide();
+		}
 
 		/* Сдвигаем стрелку */
 		tips.pa.top 		= (-1) * arrow.height;
 
 		/* Если tips из центра  */
-		tips.pt.left 		= tips.ps.left + Math.round( tips.ps.width / 2 ) - Math.round( tips.pt.width / 2 );
+		tips.pt.left 		= tips.ps.left*1 + Math.round( tips.ps.width / 2 ) - Math.round( tips.pt.width / 2 );
 		tips.pa.left 		= Math.round( tips.pt.width / 2 ) - Math.round( arrow.width / 2 );
 
 		/* Если установлена проверка на границы страницы HTML */
@@ -266,19 +283,23 @@ QuickTips.read = function ( option ) {
 	/* Создаем готовый объект */
 	option 				= $.extend( {}, QuickTips.defaultOptions, option, fromel );
 
-	/* Получаем контент */
-	switch ( option["content-from"] ) {
-		case "html":
-			option["content"] = $(this).html();
-		break
-		default:
-			option["content"] = $(this).attr( "quick-tips" );
-	}
+	option["content"] 	= QuickTips.getContent.call( this, option["content-from"] );
 
 	return option;
 
 };
 
-$( QuickTips );
+QuickTips.getContent = function ( from ) {
 
-/* END */
+	if ( from == "attr" )
+		var content 	= $(this).attr( "quick-tips" );
+
+	/* Если контента нет в attr — ищем в html */
+	if ( (from == "html") || (typeof content == "undefined") )
+		var content 	= $(this).html();
+
+	return content;
+
+}
+
+$( QuickTips );
