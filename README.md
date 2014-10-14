@@ -60,3 +60,10 @@ QuickTips(".my-hint", { "color" : "#FF0000", "background-color" : "#FFF" });
 - hide (после скрытия)
 
 Пример использования before приведен на [демо странице](http://milaxcom.github.io/jQueryQuickTips/demo/). В центральном сообщении отображается текущее время.
+
+#####Handler можно вызвать прямо из атрибута.
+```html
+<!-- HTML -->
+<div class="quick-tips" quick-tips="From left border" quick-tips-before="myfunction"></div>
+```
+В данном примере калбек before исполнит глобальную функцию ```myfunction```.
